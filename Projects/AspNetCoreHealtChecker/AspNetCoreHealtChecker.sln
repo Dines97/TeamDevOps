@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealtChecker", "AspNetCoreHealtChecker\AspNetCoreHealtChecker.csproj", "{4B096CBE-472E-4E51-8EA1-4CF721F5DA37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealtChecker.WebTest", "AspNetCoreHealtChecker.WebTest\AspNetCoreHealtChecker.WebTest.csproj", "{3D981944-2F99-4A27-8958-E754BF912BD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B096CBE-472E-4E51-8EA1-4CF721F5DA37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B096CBE-472E-4E51-8EA1-4CF721F5DA37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B096CBE-472E-4E51-8EA1-4CF721F5DA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B096CBE-472E-4E51-8EA1-4CF721F5DA37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D981944-2F99-4A27-8958-E754BF912BD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D981944-2F99-4A27-8958-E754BF912BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D981944-2F99-4A27-8958-E754BF912BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D981944-2F99-4A27-8958-E754BF912BD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BD7A727-6FF9-414F-8F4D-0A5A7EB7B2BD}
+	EndGlobalSection
+EndGlobal
