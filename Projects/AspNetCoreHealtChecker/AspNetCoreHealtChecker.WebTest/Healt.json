@@ -1,0 +1,116 @@
+﻿{
+  "DefaultSettings": {
+    "Severity": "Warning",
+    "Logger": "logger.settings"
+  },
+  "ConnectionStrings": {
+    "default": "....."
+  },
+  "HealthCheck": {
+    "Probes": [
+      {
+        "Name": "SomeName",
+        "Type": "HttpRequest",
+        "Timeout": 1,
+        "Severity": "Critical",
+        "Properties": {
+          "Path": "some.service",
+          "ReturnCode": 200
+        }
+      },
+      {
+        "Name": "RMQ",
+        "Type": "RabbitMQ",
+        "Timeout": 1,
+        "Severity": "Critical",
+        "Properties": {
+          "ConnectionString": "amqp://localhost:5672/demo"
+        }
+      },
+      {
+        "Name": "ELK",
+        "Type": "ElasticSearch",
+        "Timeout": 1,
+        "Severity": "Critical",
+        "Properties": {
+          "ConnectionString": "http://localhost:9000/"
+        }
+      },
+      {
+        "Name": "SqlServer",
+        "Type": "SqlServer",
+        "Timeout": 1,
+        "Severity": "Critical",
+        "Properties": {
+          "ConnectionString": "Data Source=.., Initial Catalog=Turkuaz, User Id=abc, Password=111",
+          // or
+          "HostName": "",
+          "Database": "",
+          "User": "",
+          "Password": "",
+
+          "CheckSqlStatement":  "SELECT COUNT(*) FROM dbo.Deneme WHERE IS_ACTIVE = 1"
+        }
+      },
+
+      {
+        "Probe": {
+          "Type": "MySQLConnection",
+          "Path": "database.address",
+          "TableName": "datatable",
+          "User": "user",
+          "Password": "password"
+        },
+        "Name": "SomeName",
+        "Path": "/db",
+        "Timeout": 5,
+        "RetryCount": 1
+      },
+      {
+        "Probe": {
+          "Type": "RabbitMQ",
+          "Path": "database.address",
+          "TableName": "datatable",
+          "User": "user",
+          "Password": "password"
+        },
+        "Name": "SomeName",
+        "Path": "/db",
+        "Timeout": 5,
+        "RetryCount": 1
+      },
+      {
+        "MultipleProbe": [
+          {
+            "Type": "HttpProbe",
+            "Path": "some.other.com",
+            "ReturnCode": 200
+          },
+          {
+            "Type": "HttpsProbe",
+            "Path": "https.service",
+            "CertificatePath": "/etc/cert"
+          }
+        ],
+        "Name": "SomeName",
+        "Selection": "All",
+        "Path": "/multiple",
+        "Timeout": 10,
+        "Severity": "Low"
+      }
+    ],
+    "Endpoints": [
+      {
+        "name": "text",
+        "uri": "/hct",
+        "responseType": "plainText"
+      },
+      {
+        "name": "json",
+        "uri": "/hc",
+        "responseType" : "json"
+      }
+    ]
+  }
+
+}
