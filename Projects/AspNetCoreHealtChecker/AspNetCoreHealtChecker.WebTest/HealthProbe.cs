@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TurkuazGO.VehicleShipment.WebApi
+namespace AspNetCoreHealthChecker.WebTest
 {
   public class HealthProbe
   {

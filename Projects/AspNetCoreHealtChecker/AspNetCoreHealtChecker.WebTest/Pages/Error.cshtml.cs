@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
 
-namespace AspNetCoreHealtChecker.WebTest.Pages
+namespace AspNetCoreHealthChecker.WebTest.Pages
 {
   [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
   [IgnoreAntiforgeryToken]

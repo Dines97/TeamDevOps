@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreHealtChecker.Config
+﻿namespace AspNetCoreHealthChecker.Config
 {
   public class HealthCheck
   {

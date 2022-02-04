@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AspNetCoreHealthChecker.Config;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -6,15 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace AspNetCoreHealtChecker
+namespace AspNetCoreHealthChecker
 {
   public static class WebApplicationBuilderExtensions
   {
     public static WebApplicationBuilder ConfigureHealthCheck(this WebApplicationBuilder builder)
     {
-      var healthSection = builder.Configuration.GetSection(nameof(Config.HealthCheck));
-      builder.Services.Configure<Config.HealthCheck>(healthSection);
-      var healthConfig = healthSection.Get<Config.HealthCheck>();
+      var healthSection = builder.Configuration.GetSection(nameof(HealthCheck));
+      builder.Services.Configure<HealthCheck>(healthSection);
+      var healthConfig = healthSection.Get<HealthCheck>();
 
       var healthCheckBuilder = builder.Services.AddHealthChecks();
 
@@ -41,15 +42,15 @@ namespace AspNetCoreHealtChecker
   {
     public static WebApplication UseAspNetHealthChecks(this WebApplication app)
     {
-      var h = app.Services.GetService<IOptions<Config.HealthCheck>>();
+      var h = app.Services.GetService<IOptions<HealthCheck>>();
 
       foreach (var endpoint in h.Value.Endpoints)
       {
-        if (endpoint.ResponseType == Config.ResponseType.PlainText)
+        if (endpoint.ResponseType == ResponseType.PlainText)
         {
           app.UseHealthChecks(endpoint.Uri);
         }
-        else if (endpoint.ResponseType == Config.ResponseType.Json)
+        else if (endpoint.ResponseType == ResponseType.Json)
         {
           app.UseHealthChecks(endpoint.Uri, new HealthCheckOptions
           {

@@ -1,4 +1,4 @@
-using AspNetCoreHealtChecker;
+using AspNetCoreHealthChecker;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +15,7 @@ builder.ConfigureHealthCheck();
 var app = builder.Build();
 
 
-var h = app.Services.GetService<IOptions<AspNetCoreHealtChecker.Config.HealthCheck>>();
+var h = app.Services.GetService<IOptions<AspNetCoreHealthChecker.Config.HealthCheck>>();
 
 app.UseAspNetHealthChecks();
 
