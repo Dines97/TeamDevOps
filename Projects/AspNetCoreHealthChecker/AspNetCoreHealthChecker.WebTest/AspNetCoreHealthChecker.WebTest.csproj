@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetCoreHealtChecker\AspNetCoreHealthChecker.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj" />
   </ItemGroup>
 
 </Project>
