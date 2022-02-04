@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHealthChecker.Config;
+using AspNetCoreHealthChecker.Plugins;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace AspNetCoreHealthChecker
 {
@@ -19,19 +21,31 @@ namespace AspNetCoreHealthChecker
 
       var healthCheckBuilder = builder.Services.AddHealthChecks();
 
+      List<IPlugin> plugins = new List<IPlugin>()
+      {
+        new HttpRequestPlugin()
+      };
+
+
+      foreach (var plugin in healthConfig.Plugins)
+      {
+        var a = Assembly.Load(plugin);
+        if (a != null)
+        {
+          var classes = a.GetExportedTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IPlugin)));
+          foreach (var t in classes)
+          {
+            var p = Activator.CreateInstance(t) as IPlugin;
+            if (p != null) plugins.Add(p);
+          }
+        }
+      }
+
       foreach (var probe in healthConfig.Probes)
       {
-
-        if (probe.Type == "HttpRequest")
-        {
-          healthCheckBuilder.AddUrlGroup(new Uri(probe.Properties["Path"].ToString()),
-                                         probe.Name,
-                                         timeout: TimeSpan.FromSeconds(probe.Timeout));
-        }
-        else if (probe.Type == "RabbitMQ")
-        {
-          //
-        }
+        var p = plugins.FirstOrDefault(x => x.Check(probe.Type));
+        if (p == null) continue;
+        p.Run(healthCheckBuilder, probe);
       }
 
       return builder;

@@ -2,6 +2,8 @@
 {
   public class HealthCheck
   {
+    public string[] Plugins { get; set; } = Array.Empty<string>();
+
     public Probe[] Probes { get; set; }
 
     public Endpoint[] Endpoints { get; set; }
