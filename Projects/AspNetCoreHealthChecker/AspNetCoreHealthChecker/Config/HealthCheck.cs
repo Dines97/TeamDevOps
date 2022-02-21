@@ -2,6 +2,9 @@
 {
   public class HealthCheck
   {
+
+    public bool IgnoreUnsupportedProbes { get; set; } = false;
+
     public string[] Plugins { get; set; } = Array.Empty<string>();
 
     public Probe[] Probes { get; set; }
@@ -33,6 +36,9 @@
     //     "Path": "some.service",
     //     "ReturnCode": 200
     //   }
+    
+    public string Description { get; set; }
+    
     public Dictionary<string, object> Properties { get; set; }
   }
 

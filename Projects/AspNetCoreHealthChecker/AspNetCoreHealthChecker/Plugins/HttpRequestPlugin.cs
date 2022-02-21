@@ -5,16 +5,19 @@ namespace AspNetCoreHealthChecker.Plugins
 {
   public class HttpRequestPlugin : IPlugin
   {
-    public bool Check(string text)
+    
+    private readonly List<IProbeBuilder> _supportedProbes = new List<IProbeBuilder>();
+    
+    
+    public HttpRequestPlugin()
     {
-      return string.Compare(text, "HttpRequest", true) == 0;
+      _supportedProbes.Add(new HttpProbeBuilder());
+      
     }
 
-    public void Run(IHealthChecksBuilder healthChecksBuilder, Probe probe)
+    public List<IProbeBuilder> GetProbeTypes()
     {
-      healthChecksBuilder.AddUrlGroup(new Uri(probe.Properties["Path"].ToString()),
-                                         probe.Name,
-                                         timeout: TimeSpan.FromSeconds(probe.Timeout));
+      return _supportedProbes;
     }
   }
 }

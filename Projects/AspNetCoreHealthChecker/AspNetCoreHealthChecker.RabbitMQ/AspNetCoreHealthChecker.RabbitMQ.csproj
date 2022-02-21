@@ -10,4 +10,8 @@
     <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.3" />
+  </ItemGroup>
+
 </Project>

@@ -5,8 +5,6 @@ namespace AspNetCoreHealthChecker
 {
   public interface IPlugin
   {
-    bool Check(string text);
-
-    void Run(IHealthChecksBuilder healthChecksBuilder, Probe probe);
+    List<IProbeBuilder> GetProbeTypes();
   }
 }

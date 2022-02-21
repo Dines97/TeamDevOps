@@ -1,4 +1,6 @@
-﻿using AspNetCoreHealthChecker.Config;
+﻿using System.Configuration;
+using System.Data;
+using AspNetCoreHealthChecker.Config;
 using AspNetCoreHealthChecker.Plugins;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -21,11 +23,10 @@ namespace AspNetCoreHealthChecker
 
       var healthCheckBuilder = builder.Services.AddHealthChecks();
 
-      List<IPlugin> plugins = new List<IPlugin>()
-      {
-        new HttpRequestPlugin()
-      };
+      List<IPlugin> plugins = new List<IPlugin>() {new HttpRequestPlugin()};
 
+      List<IProbeBuilder> supportedProbes = new List<IProbeBuilder>();
+      List<IProbe> probes = new List<IProbe>();
 
       foreach (var plugin in healthConfig.Plugins)
       {
@@ -41,12 +42,31 @@ namespace AspNetCoreHealthChecker
         }
       }
 
+      foreach (var plugin in plugins)
+      {
+        supportedProbes.AddRange(plugin.GetProbeTypes());
+      }
+
       foreach (var probe in healthConfig.Probes)
       {
-        var p = plugins.FirstOrDefault(x => x.Check(probe.Type));
-        if (p == null) continue;
-        p.Run(healthCheckBuilder, probe);
+        bool find = false;
+        foreach (var supportedProbe in supportedProbes)
+        {
+          if (supportedProbe.Check(probe.Type))
+          {
+            find = true;
+            IProbe p = supportedProbe.Build(probe);
+            probes.Add(p);
+          }
+        }
+
+        if (!find && !healthConfig.IgnoreUnsupportedProbes)
+          throw new InvalidExpressionException("Unsupported probe type: " + probe.Type);
       }
+
+
+      ProbeRunner runner = new ProbeRunner();
+      runner.run(probes);
 
       return builder;
     }
@@ -75,7 +95,7 @@ namespace AspNetCoreHealthChecker
               var result = JsonConvert.SerializeObject(new
               {
                 status = r.Status.ToString(),
-                components = r.Entries.Select(e => new { key = e.Key, value = e.Value.Status.ToString() })
+                components = r.Entries.Select(e => new {key = e.Key, value = e.Value.Status.ToString()})
               });
               await c.Response.WriteAsync(result);
             }
@@ -86,5 +106,4 @@ namespace AspNetCoreHealthChecker
       return app;
     }
   }
-
 }
