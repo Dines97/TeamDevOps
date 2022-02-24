@@ -1,7 +1,4 @@
-﻿using AspNetCoreHealthChecker.Config;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace AspNetCoreHealthChecker
+﻿namespace AspNetCoreHealthChecker
 {
   public interface IPlugin
   {

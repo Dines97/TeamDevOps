@@ -1,16 +1,20 @@
-﻿namespace AspNetCoreHealthChecker;
+﻿using Newtonsoft.Json;
+
+namespace AspNetCoreHealthChecker;
 
 public class ProbeRunner
 {
-  public void run(IProbe probe)
+  private readonly List<ProbeDelegate> _probeDelegates;
+
+  public ProbeRunner(List<ProbeDelegate> probeDelegates)
   {
+    this._probeDelegates = probeDelegates;
   }
 
-  public void run(IEnumerable<IProbe> probes)
+  public string RunJson()
   {
-    foreach (var probe in probes)
-    {
-      Console.WriteLine(probe.Run().ResultEnum);
-    }
+    _probeDelegates.ForEach(p => p.Run());
+
+    return JsonConvert.SerializeObject(_probeDelegates);
   }
 }

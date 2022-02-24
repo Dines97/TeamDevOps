@@ -1,10 +1,15 @@
-﻿namespace AspNetCoreHealthChecker;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace AspNetCoreHealthChecker;
 
 public class ProbeResult
 {
-  public ProbeResultEnum ResultEnum { get; set; }
+  [JsonConverter(typeof(StringEnumConverter))]
+  [JsonProperty("Result")]
+  private ProbeResultEnum ResultEnum { get; set; }
 
-  public Exception? Exception { get; set; }
+  [JsonProperty("Exception")] public Exception? Exception { get; set; }
 
   public ProbeResult(ProbeResultEnum resultEnum)
   {

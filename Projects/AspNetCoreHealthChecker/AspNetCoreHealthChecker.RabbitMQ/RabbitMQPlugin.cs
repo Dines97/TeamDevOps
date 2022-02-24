@@ -1,21 +1,12 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
-
-namespace AspNetCoreHealthChecker.RabbitMQ
+﻿namespace AspNetCoreHealthChecker.RabbitMQ
 {
-  public class RabbitMQPlugin : IPlugin
+  public class RabbitMqPlugin : IPlugin
   {
-    private readonly List<IProbeBuilder> _supportedProbes = new List<IProbeBuilder>();
-
-    public RabbitMQPlugin()
-    {
-      _supportedProbes.Add(new ProbeBuilder());
-
-    }
+    private readonly List<IProbeBuilder> _supportedProbes = new List<IProbeBuilder>() {new ProbeBuilder()};
 
     public List<IProbeBuilder> GetProbeTypes()
     {
-        return _supportedProbes;
+      return _supportedProbes;
     }
   }
 }

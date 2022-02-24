@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using System.Data;
 using AspNetCoreHealthChecker.Config;
 using AspNetCoreHealthChecker.Plugins;
 using Microsoft.AspNetCore.Builder;
@@ -8,8 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System.Reflection;
+using AspNetCoreHealthChecker.Plugins.Http;
 
 namespace AspNetCoreHealthChecker
 {
@@ -23,17 +22,17 @@ namespace AspNetCoreHealthChecker
 
       var healthCheckBuilder = builder.Services.AddHealthChecks();
 
-      List<IPlugin> plugins = new List<IPlugin>() {new HttpRequestPlugin()};
-
-      List<IProbeBuilder> supportedProbes = new List<IProbeBuilder>();
-      List<IProbe> probes = new List<IProbe>();
+      var plugins = new List<IPlugin>() {new HttpRequestPlugin()};
+      var supportedProbes = new List<IProbeBuilder>();
+      var probeDelegates = new List<ProbeDelegate>();
 
       foreach (var plugin in healthConfig.Plugins)
       {
         var a = Assembly.Load(plugin);
         if (a != null)
         {
-          var classes = a.GetExportedTypes().Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IPlugin)));
+          var classes = a.GetExportedTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IPlugin)));
           foreach (var t in classes)
           {
             var p = Activator.CreateInstance(t) as IPlugin;
@@ -55,8 +54,9 @@ namespace AspNetCoreHealthChecker
           if (supportedProbe.Check(probe.Type))
           {
             find = true;
-            IProbe p = supportedProbe.Build(probe);
-            probes.Add(p);
+
+            var probeDelegate = new ProbeDelegate(supportedProbe, probe);
+            probeDelegates.Add(probeDelegate);
           }
         }
 
@@ -64,9 +64,7 @@ namespace AspNetCoreHealthChecker
           throw new InvalidExpressionException("Unsupported probe type: " + probe.Type);
       }
 
-
-      ProbeRunner runner = new ProbeRunner();
-      runner.run(probes);
+      builder.Services.AddSingleton(new ProbeRunner(probeDelegates));
 
       return builder;
     }
@@ -77,6 +75,7 @@ namespace AspNetCoreHealthChecker
     public static WebApplication UseAspNetHealthChecks(this WebApplication app)
     {
       var h = app.Services.GetService<IOptions<HealthCheck>>();
+      var probeRunner = app.Services.GetService<ProbeRunner>();
 
       foreach (var endpoint in h.Value.Endpoints)
       {
@@ -92,12 +91,7 @@ namespace AspNetCoreHealthChecker
             {
               c.Response.ContentType = "application/json";
 
-              var result = JsonConvert.SerializeObject(new
-              {
-                status = r.Status.ToString(),
-                components = r.Entries.Select(e => new {key = e.Key, value = e.Value.Status.ToString()})
-              });
-              await c.Response.WriteAsync(result);
+              await c.Response.WriteAsync(probeRunner.RunJson());
             }
           });
         }

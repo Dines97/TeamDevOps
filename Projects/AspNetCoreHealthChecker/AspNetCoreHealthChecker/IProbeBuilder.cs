@@ -1,10 +1,8 @@
-﻿
-
-namespace AspNetCoreHealthChecker;
+﻿namespace AspNetCoreHealthChecker;
 
 public interface IProbeBuilder
 {
   public bool Check(string name);
 
-  public IProbe Build(Config.Probe probeConfig);
+  public IProbe Build(IReadOnlyDictionary<string, object> probeConfigProperties);
 }
