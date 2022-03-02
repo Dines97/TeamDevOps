@@ -1,36 +1,18 @@
-﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Exceptions;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCoreHealthChecker.RabbitMQ
 {
   public class Probe : IProbe
   {
-    private readonly ConnectionFactory _connectionFactory;
-
-    public Probe(IReadOnlyDictionary<string, object> probeConfigProperties)
+    public bool Check(string name)
     {
-      _connectionFactory = new ConnectionFactory
-      {
-        Uri = new Uri(probeConfigProperties["ConnectionString"] as string)
-      };
+      return String.Compare(name, "RabbitMQ", StringComparison.OrdinalIgnoreCase) == 0;
     }
 
-
-    public ProbeResult Run()
+    public void Configure(IHealthChecksBuilder builder, Config.Probe probeConfigProperties)
     {
-      try
-      {
-        IConnection connection = _connectionFactory.CreateConnection();
-
-        using (connection.CreateModel())
-        {
-          return new ProbeResult(ProbeResultEnum.Success);
-        }
-      }
-      catch (BrokerUnreachableException e)
-      {
-        return new ProbeResult(ProbeResultEnum.Failure, e);
-      }
+      builder.AddRabbitMQ(probeConfigProperties.Properties["ConnectionString"] as string,
+        name: probeConfigProperties.Name);
     }
   }
 }

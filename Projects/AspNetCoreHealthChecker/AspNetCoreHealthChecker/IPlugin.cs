@@ -2,6 +2,6 @@
 {
   public interface IPlugin
   {
-    List<IProbeBuilder> GetProbeTypes();
+    IEnumerable<IProbe> GetProbeTypes();
   }
 }
