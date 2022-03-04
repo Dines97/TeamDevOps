@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AspNetCoreHealthChecker.RabbitMQ\AspNetCoreHealthChecker.RabbitMQ.csproj" />
     <ProjectReference Include="..\AspNetCoreHealthChecker.Network\AspNetCoreHealthChecker.Network.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker.Uri\AspNetCoreHealthChecker.Uri.csproj" />
     <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj" />
   </ItemGroup>
 

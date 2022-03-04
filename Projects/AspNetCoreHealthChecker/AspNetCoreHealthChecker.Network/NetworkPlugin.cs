@@ -4,7 +4,7 @@
   {
     private readonly List<IProbe> _supportedProbes = new List<IProbe>()
     {
-      new HttpProbe(), new DnsResolveProbe()
+      new HttpProbe(), new DnsResolveProbe(), new TcpProbe(), new SslProbe()
     };
 
     public IEnumerable<IProbe> GetProbeTypes()
