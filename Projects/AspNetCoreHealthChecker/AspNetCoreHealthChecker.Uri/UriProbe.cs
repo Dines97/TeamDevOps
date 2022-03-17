@@ -5,6 +5,11 @@ namespace AspNetCoreHealthChecker.Uri;
 
 public class UriProbe : IProbe
 {
+  class Properties
+  {
+    public System.Uri Uri { get; set; }
+  }
+
   public bool Check(string name)
   {
     return String.Compare(name, "uri", StringComparison.OrdinalIgnoreCase) == 0;
@@ -12,8 +17,8 @@ public class UriProbe : IProbe
 
   public void Configure(IHealthChecksBuilder builder, Probe probeConfigProperties)
   {
-    var uri = new System.Uri((string)probeConfigProperties.Properties["Uri"]);
+    var p = probeConfigProperties.Properties.ToObject<Properties>();
 
-    builder.AddUrlGroup(uri: uri, name: probeConfigProperties.Name);
+    builder.AddUrlGroup(uri: p.Uri, name: probeConfigProperties.Name);
   }
 }

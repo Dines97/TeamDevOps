@@ -1,8 +1,9 @@
-﻿namespace AspNetCoreHealthChecker.Config
+﻿using Newtonsoft.Json.Linq;
+
+namespace AspNetCoreHealthChecker.Config
 {
   public class HealthCheck
   {
-
     public bool IgnoreUnsupportedProbes { get; set; } = false;
 
     public string[] Plugins { get; set; } = Array.Empty<string>();
@@ -36,10 +37,10 @@
     //     "Path": "some.service",
     //     "ReturnCode": 200
     //   }
-    
+
     public string Description { get; set; }
-    
-    public Dictionary<string, object> Properties { get; set; }
+
+    public JObject Properties { get; set; }
   }
 
   public class Endpoint

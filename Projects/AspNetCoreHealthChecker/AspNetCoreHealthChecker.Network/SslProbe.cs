@@ -5,6 +5,13 @@ namespace AspNetCoreHealthChecker.Network;
 
 public class SslProbe : IProbe
 {
+  class Properties
+  {
+    public string Host { get; set; }
+    public ushort Port { get; set; }
+    public int Expiration { get; set; }
+  }
+
   public bool Check(string name)
   {
     return String.Compare(name, "ssl", StringComparison.OrdinalIgnoreCase) == 0;
@@ -12,16 +19,10 @@ public class SslProbe : IProbe
 
   public void Configure(IHealthChecksBuilder builder, Probe probeConfigProperties)
   {
-    
-    var host = probeConfigProperties.Properties["Host"] as string;
-    var port = int.Parse((string)probeConfigProperties.Properties["Port"]);
-    var expiration = int.Parse((string)probeConfigProperties.Properties["Expiration"]);
-
+    var p = probeConfigProperties.Properties.ToObject<Properties>();
 
     builder.AddSslHealthCheck(s =>
-        s.AddHost(host: host, port: port, checkLeftDays: expiration),
-      name: probeConfigProperties.Name,
-      timeout: TimeSpan.FromDays(expiration)
-    );
+        s.AddHost(host: p.Host, port: p.Port, checkLeftDays: p.Expiration),
+      name: probeConfigProperties.Name);
   }
 }

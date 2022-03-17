@@ -9,7 +9,8 @@ builder.Services.AddRazorPages();
 //var healthSection = builder.Configuration.GetSection(nameof(AspNetCoreHealtChecker.Config.Health));
 //builder.Services.Configure<AspNetCoreHealtChecker.Config.Health>(healthSection);
 
-builder.ConfigureHealthCheck();
+// builder.Configuration.AddJsonFile("Probes.json", optional: false, reloadOnChange: true);
+builder.ConfigureHealthCheck(@"Probes.json");
 
 
 var app = builder.Build();

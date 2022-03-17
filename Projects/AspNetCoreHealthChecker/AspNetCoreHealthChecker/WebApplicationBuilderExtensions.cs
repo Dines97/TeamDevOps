@@ -13,11 +13,19 @@ namespace AspNetCoreHealthChecker
 {
   public static class WebApplicationBuilderExtensions
   {
-    public static WebApplicationBuilder ConfigureHealthCheck(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder ConfigureHealthCheck(this WebApplicationBuilder builder, string config)
     {
-      var healthSection = builder.Configuration.GetSection(nameof(HealthCheck));
-      builder.Services.Configure<HealthCheck>(healthSection);
-      var healthConfig = healthSection.Get<HealthCheck>();
+      // var healthSection = builder.Configuration.GetSection(nameof(HealthCheck));
+      // builder.Services.Configure<HealthCheck>(healthSection);
+      // var healthConfig = healthSection.Get<HealthCheck>();
+
+      if (!File.Exists(config))
+      {
+        throw new FileNotFoundException("Unable to find configuration file.");
+      }
+
+      var healthConfig = JsonConvert.DeserializeObject<HealthCheck>(File.ReadAllText(config));
+      builder.Services.AddSingleton(healthConfig);
 
       var healthCheckBuilder = builder.Services.AddHealthChecks();
 
@@ -72,9 +80,9 @@ namespace AspNetCoreHealthChecker
   {
     public static WebApplication UseAspNetHealthChecks(this WebApplication app)
     {
-      var h = app.Services.GetService<IOptions<HealthCheck>>();
+      var h = app.Services.GetService<HealthCheck>();
 
-      foreach (var endpoint in h.Value.Endpoints)
+      foreach (var endpoint in h.Endpoints)
       {
         if (endpoint.ResponseType == ResponseType.PlainText)
         {

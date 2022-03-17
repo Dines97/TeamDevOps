@@ -7,6 +7,13 @@ namespace AspNetCoreHealthChecker.Network;
 
 public class DnsResolveProbe : IProbe
 {
+  class Properties
+  {
+    public string Host { get; set; }
+    public string TargetIP { get; set; }
+  }
+
+
   public bool Check(string name)
   {
     return String.Compare(name, "DnsResolve", StringComparison.OrdinalIgnoreCase) == 0;
@@ -14,10 +21,11 @@ public class DnsResolveProbe : IProbe
 
   public void Configure(IHealthChecksBuilder builder, Probe probeConfig)
   {
+    var p = probeConfig.Properties.ToObject<Properties>();
+
     builder.AddDnsResolveHealthCheck(setup =>
     {
-      setup.ResolveHost(probeConfig.Properties["Host"] as string).To(probeConfig.Properties["TargetIP"] as string);
+      setup.ResolveHost(p.Host).To(p.TargetIP);
     }, name: probeConfig.Name);
-    
   }
 }

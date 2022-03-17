@@ -1,18 +1,26 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AspNetCoreHealthChecker.Config;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
-namespace AspNetCoreHealthChecker.RabbitMQ
+namespace AspNetCoreHealthChecker.RabbitMQ;
+
+public class Probe : IProbe
 {
-  public class Probe : IProbe
+  class Properties
   {
-    public bool Check(string name)
-    {
-      return String.Compare(name, "RabbitMQ", StringComparison.OrdinalIgnoreCase) == 0;
-    }
+    public string ConnectionString { get; set; }
+  }
 
-    public void Configure(IHealthChecksBuilder builder, Config.Probe probeConfigProperties)
-    {
-      builder.AddRabbitMQ(probeConfigProperties.Properties["ConnectionString"] as string,
-        name: probeConfigProperties.Name);
-    }
+  public bool Check(string name)
+  {
+    return String.Compare(name, "RabbitMQ", StringComparison.OrdinalIgnoreCase) == 0;
+  }
+
+  public void Configure(IHealthChecksBuilder builder, Config.Probe probeConfigProperties)
+  {
+    var p = probeConfigProperties.Properties.ToObject<Properties>();
+
+    builder.AddRabbitMQ(p.ConnectionString,
+      name: probeConfigProperties.Name);
   }
 }
