@@ -1,4 +1,6 @@
-﻿namespace AspNetCoreHealthChecker.Config
+﻿using Newtonsoft.Json;
+
+namespace AspNetCoreHealthChecker.Config
 {
   public class HealthCheck
   {

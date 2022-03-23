@@ -5,6 +5,8 @@ namespace AspNetCoreHealthChecker.Network;
 
 public class TcpProbe : IProbe
 {
+  public Type ConfigType { get; }
+
   public bool Check(string name)
   {
     return String.Compare(name, "Tcp", StringComparison.OrdinalIgnoreCase) == 0;

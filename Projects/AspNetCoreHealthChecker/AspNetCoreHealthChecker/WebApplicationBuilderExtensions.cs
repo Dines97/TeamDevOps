@@ -16,6 +16,7 @@ namespace AspNetCoreHealthChecker
     public static WebApplicationBuilder ConfigureHealthCheck(this WebApplicationBuilder builder)
     {
       var healthSection = builder.Configuration.GetSection(nameof(HealthCheck));
+      var probesSection = healthSection.GetSection("Probes");
       builder.Services.Configure<HealthCheck>(healthSection);
       var healthConfig = healthSection.Get<HealthCheck>();
 
@@ -46,17 +47,24 @@ namespace AspNetCoreHealthChecker
         supportedProbes.AddRange(plugin.GetProbeTypes());
       }
 
+      var index = -1;
+
       // Iterate over probes and configure our probes
       foreach (var probe in healthConfig.Probes)
       {
+        index++;
+        var selectedSection = probesSection.GetSection(index.ToString());
+
         bool find = false;
         foreach (var supportedProbe in supportedProbes)
         {
           if (supportedProbe.Check(probe.Type))
           {
+            var pConfig = selectedSection.Get(supportedProbe.ConfigType) as Probe;
+
             find = true;
 
-            supportedProbe.Configure(healthCheckBuilder, probe);
+            supportedProbe.Configure(healthCheckBuilder, pConfig);
           }
         }
 

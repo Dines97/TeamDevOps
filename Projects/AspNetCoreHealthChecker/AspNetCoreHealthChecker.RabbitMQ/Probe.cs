@@ -4,6 +4,8 @@ namespace AspNetCoreHealthChecker.RabbitMQ
 {
   public class Probe : IProbe
   {
+    public Type ConfigType { get; }
+
     public bool Check(string name)
     {
       return String.Compare(name, "RabbitMQ", StringComparison.OrdinalIgnoreCase) == 0;

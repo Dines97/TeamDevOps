@@ -5,6 +5,8 @@ namespace AspNetCoreHealthChecker.Uri;
 
 public class UriProbe : IProbe
 {
+  public Type ConfigType { get; }
+
   public bool Check(string name)
   {
     return String.Compare(name, "uri", StringComparison.OrdinalIgnoreCase) == 0;

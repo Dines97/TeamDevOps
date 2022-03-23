@@ -7,6 +7,8 @@ namespace AspNetCoreHealthChecker.Network;
 
 public class DnsResolveProbe : IProbe
 {
+  public Type ConfigType { get; }
+
   public bool Check(string name)
   {
     return String.Compare(name, "DnsResolve", StringComparison.OrdinalIgnoreCase) == 0;

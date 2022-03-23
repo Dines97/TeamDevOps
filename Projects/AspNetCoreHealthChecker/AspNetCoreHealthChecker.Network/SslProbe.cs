@@ -5,6 +5,8 @@ namespace AspNetCoreHealthChecker.Network;
 
 public class SslProbe : IProbe
 {
+  public Type ConfigType { get; }
+
   public bool Check(string name)
   {
     return String.Compare(name, "ssl", StringComparison.OrdinalIgnoreCase) == 0;
