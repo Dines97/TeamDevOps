@@ -1,18 +1,11 @@
 ﻿using AspNetCoreHealthChecker.Config;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 
 namespace AspNetCoreHealthChecker.Network;
 
 public class TcpProbe : IProbe
 {
-  class Properties
-  {
-    public string Host { get; set; }
-
-    public ushort Port { get; set; }
-  }
-
+  public Type ConfigType { get; }
 
   public bool Check(string name)
   {
@@ -21,11 +14,11 @@ public class TcpProbe : IProbe
 
   public void Configure(IHealthChecksBuilder builder, Probe probeConfigProperties)
   {
-    var p = probeConfigProperties.Properties.ToObject<Properties>();
+    var host = probeConfigProperties.Properties["Host"] as string;
+    var port = int.Parse((string)probeConfigProperties.Properties["Port"]);
 
-    
     builder.AddTcpHealthCheck(s =>
-        s.AddHost(host: p.Host, port: p.Port),
+        s.AddHost(host: host, port: port),
       name: probeConfigProperties.Name,
       timeout: TimeSpan.FromSeconds(probeConfigProperties.Timeout));
   }

@@ -4,7 +4,9 @@ namespace AspNetCoreHealthChecker;
 
 public interface IProbe
 {
-  bool Check(string name);
+  Type ConfigType { get; }
+
+  bool Check(string type);
 
   void Configure(IHealthChecksBuilder builder, Config.Probe probeConfigProperties);
 }

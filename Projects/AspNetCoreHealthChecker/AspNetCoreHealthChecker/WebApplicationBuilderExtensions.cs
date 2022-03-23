@@ -13,19 +13,12 @@ namespace AspNetCoreHealthChecker
 {
   public static class WebApplicationBuilderExtensions
   {
-    public static WebApplicationBuilder ConfigureHealthCheck(this WebApplicationBuilder builder, string config)
+    public static WebApplicationBuilder ConfigureHealthCheck(this WebApplicationBuilder builder)
     {
-      // var healthSection = builder.Configuration.GetSection(nameof(HealthCheck));
-      // builder.Services.Configure<HealthCheck>(healthSection);
-      // var healthConfig = healthSection.Get<HealthCheck>();
-
-      if (!File.Exists(config))
-      {
-        throw new FileNotFoundException("Unable to find configuration file.");
-      }
-
-      var healthConfig = JsonConvert.DeserializeObject<HealthCheck>(File.ReadAllText(config));
-      builder.Services.AddSingleton(healthConfig);
+      var healthSection = builder.Configuration.GetSection(nameof(HealthCheck));
+      var probesSection = healthSection.GetSection("Probes");
+      builder.Services.Configure<HealthCheck>(healthSection);
+      var healthConfig = healthSection.Get<HealthCheck>();
 
       var healthCheckBuilder = builder.Services.AddHealthChecks();
 
@@ -54,17 +47,24 @@ namespace AspNetCoreHealthChecker
         supportedProbes.AddRange(plugin.GetProbeTypes());
       }
 
+      var index = -1;
+
       // Iterate over probes and configure our probes
       foreach (var probe in healthConfig.Probes)
       {
+        index++;
+        var selectedSection = probesSection.GetSection(index.ToString());
+
         bool find = false;
         foreach (var supportedProbe in supportedProbes)
         {
           if (supportedProbe.Check(probe.Type))
           {
+            var pConfig = selectedSection.Get(supportedProbe.ConfigType) as Probe;
+
             find = true;
 
-            supportedProbe.Configure(healthCheckBuilder, probe);
+            supportedProbe.Configure(healthCheckBuilder, pConfig);
           }
         }
 
@@ -80,9 +80,9 @@ namespace AspNetCoreHealthChecker
   {
     public static WebApplication UseAspNetHealthChecks(this WebApplication app)
     {
-      var h = app.Services.GetService<HealthCheck>();
+      var h = app.Services.GetService<IOptions<HealthCheck>>();
 
-      foreach (var endpoint in h.Endpoints)
+      foreach (var endpoint in h.Value.Endpoints)
       {
         if (endpoint.ResponseType == ResponseType.PlainText)
         {

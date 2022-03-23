@@ -5,19 +5,22 @@ namespace AspNetCoreHealthChecker.Network;
 
 public class HttpProbe : IProbe
 {
-  class Properties
-  {
-    public string ConnectionString { get; set; }
-  }
-  
+  public Type ConfigType => typeof(HttpRequestProbe);
+
   public bool Check(string name)
   {
-    //throw new NotImplementedException();
-    return false;
+    return String.Compare(name, "HttpRequest", StringComparison.OrdinalIgnoreCase) == 0;
   }
 
   public void Configure(IHealthChecksBuilder builder, Probe probeConfigProperties)
   {
-    //throw new NotImplementedException();
+    
   }
+}
+
+class HttpRequestProbe : Config.Probe
+{
+  public string Path { get; set; }
+
+  public int ReturnCode { get; set; }
 }
