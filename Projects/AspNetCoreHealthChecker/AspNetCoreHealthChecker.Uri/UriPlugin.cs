@@ -4,6 +4,6 @@ public class UriPlugin : IPlugin
 {
   public IEnumerable<IProbe> GetProbeTypes()
   {
-    return new List<IProbe>() {new UriProbe()};
+    return new List<IProbe> {new UriHandler()};
   }
 }

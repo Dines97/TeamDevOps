@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.2"/>
   </ItemGroup>
 
 </Project>

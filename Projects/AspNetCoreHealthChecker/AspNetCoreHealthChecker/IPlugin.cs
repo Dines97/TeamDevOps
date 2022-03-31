@@ -1,7 +1,6 @@
-﻿namespace AspNetCoreHealthChecker
+﻿namespace AspNetCoreHealthChecker;
+
+public interface IPlugin
 {
-  public interface IPlugin
-  {
-    IEnumerable<IProbe> GetProbeTypes();
-  }
+  IEnumerable<IProbe> GetProbeTypes();
 }

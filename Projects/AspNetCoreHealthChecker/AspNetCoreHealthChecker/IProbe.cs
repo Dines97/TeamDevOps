@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AspNetCoreHealthChecker.Config;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCoreHealthChecker;
 
@@ -8,5 +9,5 @@ public interface IProbe
 
   bool Check(string type);
 
-  void Configure(IHealthChecksBuilder builder, Config.Probe probeConfigProperties);
+  void Configure(IHealthChecksBuilder builder, Properties properties);
 }

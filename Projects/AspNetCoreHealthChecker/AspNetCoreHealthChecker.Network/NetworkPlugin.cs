@@ -1,15 +1,11 @@
-﻿namespace AspNetCoreHealthChecker.Network
-{
-  public class HttpRequestPlugin : IPlugin
-  {
-    private readonly List<IProbe> _supportedProbes = new List<IProbe>()
-    {
-      new HttpProbe(), new DnsResolveProbe(), new TcpProbe(), new SslProbe()
-    };
+﻿namespace AspNetCoreHealthChecker.Network;
 
-    public IEnumerable<IProbe> GetProbeTypes()
-    {
-      return _supportedProbes;
-    }
+public class HttpRequestPlugin : IPlugin
+{
+  private readonly List<IProbe> _supportedProbes = new() {new DnsResolveHandler(), new TcpHandler(), new SslHandler()};
+
+  public IEnumerable<IProbe> GetProbeTypes()
+  {
+    return _supportedProbes;
   }
 }

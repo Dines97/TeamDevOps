@@ -1,69 +1,49 @@
-﻿using Newtonsoft.Json;
+﻿namespace AspNetCoreHealthChecker.Config;
 
-namespace AspNetCoreHealthChecker.Config
+public class HealthCheck
 {
-  public class HealthCheck
-  {
+  public bool IgnoreUnsupportedProbes { get; set; } = false;
 
-    public bool IgnoreUnsupportedProbes { get; set; } = false;
+  public string[] Plugins { get; set; } = Array.Empty<string>();
 
-    public string[] Plugins { get; set; } = Array.Empty<string>();
+  public Properties[] Probes { get; set; }
 
-    public Probe[] Probes { get; set; }
+  public Endpoint[] Endpoints { get; set; }
+}
 
-    public Endpoint[] Endpoints { get; set; }
-  }
+public class Properties
+{
+  //{
+  //   "Name": "SomeName",
+  public string Name { get; set; }
 
+  //   "Type": "HttpRequest",
+  public string Type { get; set; }
 
-  public class Probe
-  {
-    //{
-    //   "Name": "SomeName",
-    public string Name { get; set; }
+  public string Description { get; set; }
 
-    //   "Type": "HttpRequest",
-    public string Type { get; set; }
+  // //   "Severity": "Critical",
+  // public SeverityEnum Severity { get; set; } = SeverityEnum.Normal;
+}
 
-    //   "Timeout": 1,
-    public int Timeout { get; set; }
+public class Endpoint
+{
+  public string Name { get; set; }
 
-    // "RetryCount": 1
-    public int RetryCount { get; set; } = 1;
+  public string Uri { get; set; }
 
+  public ResponseType ResponseType { get; set; }
+}
 
-    //   "Severity": "Critical",
-    public SeverityEnum Severity { get; set; } = SeverityEnum.Normal;
+public enum ResponseType
+{
+  PlainText,
+  Json
+}
 
-    //   "Properties": {
-    //     "Path": "some.service",
-    //     "ReturnCode": 200
-    //   }
-    
-    public string Description { get; set; }
-    
-    public Dictionary<string, object> Properties { get; set; }
-  }
-
-  public class Endpoint
-  {
-    public string Name { get; set; }
-
-    public string Uri { get; set; }
-
-    public ResponseType ResponseType { get; set; }
-  }
-
-
-  public enum ResponseType
-  {
-    PlainText,
-    Json
-  }
-
-  public enum SeverityEnum
-  {
-    Low,
-    Normal,
-    Critical
-  }
+public enum SeverityEnum
+{
+  Low,
+  Normal,
+  Critical
 }
