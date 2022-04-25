@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.Net
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.Uri", "AspNetCoreHealthChecker.Uri\AspNetCoreHealthChecker.Uri.csproj", "{E0BC2539-CA00-4BC7-8360-C659A53DE601}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.Prober", "AspNetCoreHealthChecker.Prober\AspNetCoreHealthChecker.Prober.csproj", "{7850FD77-BDC9-4A28-A038-4C35F1938D52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.ProberOld", "AspNetCoreHealthChecker.ProberOld\AspNetCoreHealthChecker.ProberOld.csproj", "{7850FD77-BDC9-4A28-A038-4C35F1938D52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
