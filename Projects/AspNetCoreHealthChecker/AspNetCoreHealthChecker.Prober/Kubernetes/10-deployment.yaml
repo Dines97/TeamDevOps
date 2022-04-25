@@ -17,5 +17,5 @@ spec:
       serviceAccountName: prober
       containers:
         - name: prober
-          image: dines97/prober:latest
+          image: dines97/prober2:latest
           

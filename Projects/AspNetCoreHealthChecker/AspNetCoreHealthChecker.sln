@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.Uri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.ProberOld", "AspNetCoreHealthChecker.ProberOld\AspNetCoreHealthChecker.ProberOld.csproj", "{7850FD77-BDC9-4A28-A038-4C35F1938D52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.Prober", "AspNetCoreHealthChecker.Prober\AspNetCoreHealthChecker.Prober.csproj", "{B2F41B60-A7CD-4817-8FC8-171A247AF33D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{7850FD77-BDC9-4A28-A038-4C35F1938D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7850FD77-BDC9-4A28-A038-4C35F1938D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7850FD77-BDC9-4A28-A038-4C35F1938D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F41B60-A7CD-4817-8FC8-171A247AF33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F41B60-A7CD-4817-8FC8-171A247AF33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F41B60-A7CD-4817-8FC8-171A247AF33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F41B60-A7CD-4817-8FC8-171A247AF33D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
