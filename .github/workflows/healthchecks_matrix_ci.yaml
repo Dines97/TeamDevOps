@@ -24,11 +24,11 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Restore dependencies
-        run: dotnet restore $PROJECTS_PATH${{ matrix.project_name }}/${{ matrix.project_name }}.csproj
+        run: dotnet restore ${{ env.PROJECTS_PATH }}${{ matrix.project_name }}/${{ matrix.project_name }}.csproj
       - name: Build
-        run: dotnet build --no-restore -c $BUILD_CONFIG -o $PROJECTS_PATH${{ matrix.project_name }}/${{ matrix.project_name }}.csproj
+        run: dotnet build --no-restore -c ${{ env.BUILD_CONFIG }} -o ${{ env.PROJECTS_PATH }}${{ matrix.project_name }}/${{ matrix.project_name }}.csproj
       - name: Pack
-        run: dotnet pack --no-restore --no-build -c $BUILD_CONFIG  -o ./artifactsx $PROJECTS_PATH${{ matrix.project_name }}/${{ matrix.project_name }}.csproj
+        run: dotnet pack --no-restore --no-build -c ${{ env.BUILD_CONFIG }}  -o ./artifactsx ${{ env.PROJECTS_PATH }}${{ matrix.project_name }}/${{ matrix.project_name }}.csproj
       - name: Nuget publish
         run: dotnet nuget push ./artifacts/${{ matrix.project_name }}.*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
         
