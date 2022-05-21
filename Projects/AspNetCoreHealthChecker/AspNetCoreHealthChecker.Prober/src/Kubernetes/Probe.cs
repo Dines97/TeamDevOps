@@ -1,15 +1,19 @@
 using System.Text.Json.Serialization;
+using AspNetCoreHealthChecker.Config;
 using k8s.Models;
 
 namespace AspNetCoreHealthChecker.Prober.Kubernetes;
 
-public class Probe : CustomResource<ProbeSpec, ProbeStatus>
+public class Probe : CustomResource<Properties, ProbeStatus>
 {
+  public override string ToString()
+  {
+    return $"{Metadata.Name} - {Spec.Type}";
+  }
 }
 
-public class ProbeSpec
+public class ProbeSpec : Properties
 {
-  [JsonPropertyName("cityName")] public string CityName { get; set; }
 }
 
 public class ProbeStatus : V1Status

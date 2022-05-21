@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 
-tag=$(
-  tr -dc A-Za-z0-9 </dev/urandom | head -c 13
-  echo ''
-)
+kubectl apply -f ./Kubernetes/10-deployment.yaml -f ./Kubernetes/01-sa.yaml
 
-docker build -f Dockerfile -t dines97/prober2:${tag} .
-
-docker push dines97/prober:${tag}
-
-kubectl apply -f ./Kubernetes/10-deploym
-
-kubectl apply -f ./Kubernetes
+kubectl scale --replicas=0 deployment/prober
+kubectl scale --replicas=1 deployment/prober

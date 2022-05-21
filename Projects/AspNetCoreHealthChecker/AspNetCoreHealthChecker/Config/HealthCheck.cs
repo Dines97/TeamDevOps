@@ -24,6 +24,9 @@ public class Properties
 
   // //   "Severity": "Critical",
   // public SeverityEnum Severity { get; set; } = SeverityEnum.Normal;
+
+  public IEnumerable<string> Tags { get; set; }
+  
 }
 
 public class Endpoint
@@ -33,6 +36,8 @@ public class Endpoint
   public string Uri { get; set; }
 
   public ResponseType ResponseType { get; set; }
+
+  public String? Tag { get; set; }
 }
 
 public enum ResponseType

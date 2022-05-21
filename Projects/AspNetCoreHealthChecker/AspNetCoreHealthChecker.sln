@@ -17,6 +17,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.Prober", "AspNetCoreHealthChecker.Prober\AspNetCoreHealthChecker.Prober.csproj", "{B2F41B60-A7CD-4817-8FC8-171A247AF33D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomResourceTest", "CustomResourceTest\CustomResourceTest.csproj", "{A3306B70-6D5E-411D-BC17-DE66655D8DF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.ElasticSearch", "AspNetCoreHealthChecker.ElasticSearch\AspNetCoreHealthChecker.ElasticSearch.csproj", "{44DC359B-5DE6-458D-B82A-6490E6AB9CC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.NpgSql", "AspNetCoreHealthChecker.NpgSql\AspNetCoreHealthChecker.NpgSql.csproj", "{DC70D2AA-1B7F-4A5C-B472-A7A9118649BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreHealthChecker.OpenIdConnectServer", "AspNetCoreHealthChecker.OpenIdConnectServer\AspNetCoreHealthChecker.OpenIdConnectServer.csproj", "{40A0DAFE-8334-46C0-BAE5-0B01B3697E29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +59,22 @@ Global
 		{B2F41B60-A7CD-4817-8FC8-171A247AF33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2F41B60-A7CD-4817-8FC8-171A247AF33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2F41B60-A7CD-4817-8FC8-171A247AF33D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3306B70-6D5E-411D-BC17-DE66655D8DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3306B70-6D5E-411D-BC17-DE66655D8DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3306B70-6D5E-411D-BC17-DE66655D8DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3306B70-6D5E-411D-BC17-DE66655D8DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44DC359B-5DE6-458D-B82A-6490E6AB9CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44DC359B-5DE6-458D-B82A-6490E6AB9CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44DC359B-5DE6-458D-B82A-6490E6AB9CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44DC359B-5DE6-458D-B82A-6490E6AB9CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC70D2AA-1B7F-4A5C-B472-A7A9118649BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC70D2AA-1B7F-4A5C-B472-A7A9118649BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC70D2AA-1B7F-4A5C-B472-A7A9118649BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC70D2AA-1B7F-4A5C-B472-A7A9118649BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40A0DAFE-8334-46C0-BAE5-0B01B3697E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A0DAFE-8334-46C0-BAE5-0B01B3697E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A0DAFE-8334-46C0-BAE5-0B01B3697E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A0DAFE-8334-46C0-BAE5-0B01B3697E29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

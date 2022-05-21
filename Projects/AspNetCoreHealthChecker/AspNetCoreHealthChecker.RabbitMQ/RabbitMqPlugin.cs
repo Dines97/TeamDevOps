@@ -2,7 +2,7 @@
 
 public class RabbitMqPlugin : IPlugin
 {
-  private readonly List<IProbe> _supportedProbes = new() {new RabbitMqHandler()};
+  private readonly List<IProbe> _supportedProbes = new() { new RabbitMqHandler() };
 
   public IEnumerable<IProbe> GetProbeTypes()
   {

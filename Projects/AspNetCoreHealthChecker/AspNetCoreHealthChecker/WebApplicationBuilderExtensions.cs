@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -32,7 +33,8 @@ public static class WebApplicationBuilderExtensions
       if (a != null)
       {
         var classes = a.GetExportedTypes()
-          .Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces().Contains(typeof(IPlugin)));
+          .Where(t => t.IsClass && !t.IsAbstract && t.GetInterfaces()
+            .Contains(typeof(IPlugin)));
         foreach (var t in classes)
         {
           var p = Activator.CreateInstance(t) as IPlugin;
@@ -89,27 +91,29 @@ public static class WebApplicationExtensions
 
     foreach (var endpoint in h.Value.Endpoints)
     {
-      if (endpoint.ResponseType == ResponseType.PlainText)
-      {
-        app.UseHealthChecks(endpoint.Uri);
-      }
-      else if (endpoint.ResponseType == ResponseType.Json)
-      {
-        app.UseHealthChecks(endpoint.Uri, new HealthCheckOptions
-        {
-          ResponseWriter = async (c, r) =>
-          {
-            c.Response.ContentType = "application/json";
+      var options = new HealthCheckOptions();
 
-            var result = JsonConvert.SerializeObject(new
-            {
-              status = r.Status.ToString(),
-              components = r.Entries.Select(e => new {key = e.Key, value = e.Value.Status.ToString()})
-            });
-            await c.Response.WriteAsync(result);
-          }
-        });
+      if (endpoint.Tag != null)
+      {
+        options.Predicate = healthCheck => healthCheck.Tags.Contains(endpoint.Tag);
       }
+
+      if (endpoint.ResponseType == ResponseType.Json)
+      {
+        options.ResponseWriter = async (c, r) =>
+        {
+          c.Response.ContentType = "application/json";
+
+          var result = JsonConvert.SerializeObject(new
+          {
+            status = r.Status.ToString(),
+            components = r.Entries.Select(e => new { key = e.Key, value = e.Value.Status.ToString() })
+          });
+          await c.Response.WriteAsync(result);
+        };
+      }
+
+      app.UseHealthChecks(endpoint.Uri, options);
     }
 
     return app;

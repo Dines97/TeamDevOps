@@ -22,7 +22,8 @@
         "Timeout": 1,
         "Severity": "Critical",
         "Description": "Some description",
-        "ConnectionString": "amqp://localhost:19420"
+        "ConnectionString": "amqp://localhost:19420",
+        "Tags": ["database"]
       },
       {
         "Name": "DNS google",
@@ -33,7 +34,8 @@
         "Host": "www.google.com",
         "Registrations": [
           "172.217.169.142"
-        ]
+        ],
+        "Tags": ["dns"]
       },
       {
         "Name": "DNS localhost",
@@ -43,8 +45,9 @@
         "Description": "Some description",
         "Host": "localhost",
         "Registrations": [
-          "127.0.0.1"
-        ]
+          "127.0.0.1" , "::1"
+        ],
+        "Tags": ["dns"]
       },
       {
         "Name": "Tcp probe",
@@ -161,14 +164,26 @@
     ],
     "Endpoints": [
       {
-        "name": "text",
-        "uri": "/hct",
-        "responseType": "plainText"
+        "Name": "text",
+        "Uri": "/hct",
+        "ResponseType": "plainText"
       },
       {
-        "name": "json",
-        "uri": "/hc",
-        "responseType": "json"
+        "Name": "json",
+        "Uri": "/hc",
+        "ResponseType": "json"
+      },
+      {
+        "Name": "Database",
+        "Uri": "/health/database",
+        "ResponseType": "json",
+        "Tag": "database"
+      },
+      {
+        "Name": "DNS",
+        "Uri": "/health/dns",
+        "ResponseType": "json",
+        "Tag" : "dns"
       }
     ]
   }

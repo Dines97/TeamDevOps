@@ -17,9 +17,11 @@ public class DnsResolveHandler : IProbe
     var p = properties as DnsResolveProperties;
 
     builder.AddDnsResolveHealthCheck(setup =>
-    {
-      setup.ResolveHost(p.Host).To(p.Registrations);
-    }, p.Name);
+      {
+        setup.ResolveHost(p.Host).To(p.Registrations);
+      },
+      p.Name,
+      tags: p.Tags);
   }
 
   private class DnsResolveProperties : Properties

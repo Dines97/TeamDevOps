@@ -6,12 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="6.0.2" />
   </ItemGroup>
 
 </Project>
