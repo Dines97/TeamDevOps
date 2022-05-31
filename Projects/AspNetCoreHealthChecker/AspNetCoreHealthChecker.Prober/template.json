@@ -1,0 +1,18 @@
+﻿{
+  "HealthCheck": {
+    "IgnoreUnsupportedProbes": true,
+    "Plugins": [
+      "AspNetCoreHealthChecker.RabbitMQ",
+      "AspNetCoreHealthChecker.Network",
+      "AspNetCoreHealthChecker.Uri"
+    ],
+    "Probes": [],
+    "Endpoints": [
+      {
+        "Name": "json",
+        "Uri": "/hc",
+        "ResponseType": "json"
+      }
+    ]
+  }
+}

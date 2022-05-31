@@ -1,10 +1,11 @@
 using System.Text.Json.Serialization;
 using AspNetCoreHealthChecker.Config;
 using k8s.Models;
+using Newtonsoft.Json.Linq;
 
 namespace AspNetCoreHealthChecker.Prober.Kubernetes;
 
-public class Probe : CustomResource<Properties, ProbeStatus>
+public class Probe : CustomResource<ProbeSpec, ProbeStatus>
 {
   public override string ToString()
   {
@@ -14,6 +15,7 @@ public class Probe : CustomResource<Properties, ProbeStatus>
 
 public class ProbeSpec : Properties
 {
+  public JObject Properties { get; set; }
 }
 
 public class ProbeStatus : V1Status

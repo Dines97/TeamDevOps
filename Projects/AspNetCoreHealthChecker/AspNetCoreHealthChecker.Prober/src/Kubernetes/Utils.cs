@@ -4,10 +4,9 @@ public static class Utils
 {
   public static CustomResourceDefinition MakeProbeDefinition()
   {
-    return  new CustomResourceDefinition()
+    return new CustomResourceDefinition
     {
-      Kind = "Probe", Group = "dteknoloji.com", Version = "v1alpha1", PluralName = "probes"
+      Kind = "Probe", Group = "denis.com", Version = "v1alpha1", PluralName = "probes"
     };
-    
   }
 }

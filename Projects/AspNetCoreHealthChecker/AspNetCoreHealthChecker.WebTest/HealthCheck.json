@@ -7,23 +7,31 @@
       "AspNetCoreHealthChecker.Uri"
     ],
     "Probes": [
-      //      {
-      //        "Name": "SomeName",
-      //        "Type": "HttpRequest",
-      //        "Timeout": 1,
-      //        "Severity": "Critical",
-      //        "Description": "Some description",
-      //        "Path": "http://localhost:5037/",
-      //        "ReturnCode": 200
-      //      },
       {
         "Name": "RMQ",
         "Type": "RabbitMQ",
         "Timeout": 1,
         "Severity": "Critical",
         "Description": "Some description",
-        "ConnectionString": "amqp://localhost:19420",
-        "Tags": ["database"]
+        "ConnectionString": "amqp://localhost:5672",
+        "Tags": [
+          "database"
+        ]
+      },
+      {
+        "Name": "DNS localhost",
+        "Type": "DnsResolve",
+        "Timeout": 1,
+        "Severity": "Critical",
+        "Description": "Some description",
+        "Host": "localhost",
+          "Registrations": [
+            "127.0.0.1",
+            "::1"
+          ],  
+        "Tags": [
+          "dns"
+        ]
       },
       {
         "Name": "DNS google",
@@ -35,19 +43,9 @@
         "Registrations": [
           "172.217.169.142"
         ],
-        "Tags": ["dns"]
-      },
-      {
-        "Name": "DNS localhost",
-        "Type": "DnsResolve",
-        "Timeout": 1,
-        "Severity": "Critical",
-        "Description": "Some description",
-        "Host": "localhost",
-        "Registrations": [
-          "127.0.0.1" , "::1"
-        ],
-        "Tags": ["dns"]
+        "Tags": [
+          "dns"
+        ]
       },
       {
         "Name": "Tcp probe",
@@ -183,7 +181,7 @@
         "Name": "DNS",
         "Uri": "/health/dns",
         "ResponseType": "json",
-        "Tag" : "dns"
+        "Tag": "dns"
       }
     ]
   }

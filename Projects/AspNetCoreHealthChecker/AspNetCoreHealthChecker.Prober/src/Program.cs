@@ -1,11 +1,13 @@
-using AspNetCoreHealthChecker.Prober;
+using AspNetCoreHealthChecker;
 using AspNetCoreHealthChecker.Prober.Kubernetes;
 using AspNetCoreHealthChecker.Prober.Kubernetes.Configuration;
 using k8s;
 
-const bool inCluster = true;
+const bool inCluster = false;
 
-var k8SClientConfig = inCluster ? KubernetesClientConfiguration.InClusterConfig() : KubernetesClientConfiguration.BuildConfigFromConfigFile();
+var k8SClientConfig = inCluster
+  ? KubernetesClientConfiguration.InClusterConfig()
+  : KubernetesClientConfiguration.BuildConfigFromConfigFile();
 
 var client = new Kubernetes(k8SClientConfig);
 
@@ -21,7 +23,10 @@ foreach (var probe in probes.Items)
 }
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.Configuration.AddKubernetesConfiguration(generic);
+builder.Configuration.AddJsonFile("template.json", false, true);
+builder.Configuration.AddKubernetesConfiguration(client, crd, generic);
+builder.ConfigureHealthCheck();
+
 
 // Add services to the container.
 
@@ -31,6 +36,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseAspNetHealthChecks();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

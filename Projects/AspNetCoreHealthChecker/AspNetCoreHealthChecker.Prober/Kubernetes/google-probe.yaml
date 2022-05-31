@@ -1,0 +1,14 @@
+apiVersion: denis.com/v1alpha1
+kind: Probe
+metadata:
+  name: dns-localhost
+  namespace: default
+spec:
+  Type: DnsResolve
+  Timeout: 1
+  Severity: critical
+  Description: 'Some description'
+  Host: 'localhost'
+  Registrations:
+    - '127.0.0.1'
+    - '::1'

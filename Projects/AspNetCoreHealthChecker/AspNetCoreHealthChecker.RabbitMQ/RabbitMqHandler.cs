@@ -17,7 +17,7 @@ public class RabbitMqHandler : IProbe
     var p = properties as RabbitMqProperties;
 
     builder.AddRabbitMQ(
-      p.ConnectionString,
+      rabbitConnectionString: p.ConnectionString,
       name: p.Name,
       tags: p.Tags
     );

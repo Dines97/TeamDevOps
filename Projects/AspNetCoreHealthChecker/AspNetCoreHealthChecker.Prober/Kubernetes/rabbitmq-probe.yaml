@@ -1,0 +1,11 @@
+apiVersion: denis.com/v1alpha1
+kind: Probe
+metadata:
+  name: rabbitmq
+  namespace: default
+spec:
+  Type: RabbitMQ
+  ConnectionString: 'amqp://localhost:19420'
+  Timeout: 1
+  Severity: critical
+  Description: 'Some description'
