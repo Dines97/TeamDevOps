@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
-using k8s;
+﻿using k8s;
 
 namespace AspNetCoreHealthChecker.Prober.Kubernetes.Configuration;
 
@@ -23,43 +21,49 @@ public class KubernetesConfigurationProvider : ConfigurationProvider
     var crs = _genericClient.ListNamespacedAsync<CustomResourceList<Probe>>("default").ConfigureAwait(false)
       .GetAwaiter()
       .GetResult();
-    
+
     var resp = _client
       .ListNamespacedCustomObjectWithHttpMessagesAsync(_crd.Group, _crd.Version, "default", _crd.PluralName)
       .ConfigureAwait(false).GetAwaiter().GetResult();
     //return KubernetesJson.Deserialize<T>(resp.Body.ToString());
 
     var jsonString = resp.Body.ToString();
-    var jsonObject = JsonSerializer.Deserialize<JsonObject>(jsonString);
-    
-    var i = 0;
-    foreach (var jsonNode in jsonObject["items"].AsArray())
-    {
-      Data.Add($"HealthCheck:Probes:{i}:Name", jsonNode["metadata"]["name"].ToString());
 
-      foreach (var properties in jsonNode["spec"].AsObject())
-      {
-        try
-        {
-          Data.Add($"HealthCheck:Probes:{i}:{properties.Key}", properties.Value.ToString());
-        }
-        catch (Exception e)
-        {
-          Console.WriteLine(e);
-          throw;
-        }
 
-        Data.Add($"HealthCheck:Probes:{i}:{properties.Key}", properties.Value.ToString());
-      }
-      i++;
-    }
-    
-    Console.WriteLine(jsonObject.ToString());
+    Data = KubernetesConfigurationParser.Parse(jsonString);
 
-    foreach (var test in Data)
-    {
-      Console.WriteLine(test.Key + " " + test.Value);
-    }
+    // jsonObject = JsonSerializer.Deserialize<JsonDocument>(jsonString).RootElement;
+
+
+    // var i = 0;
+    // foreach (var jsonNode in jsonObject.GetProperty("items").EnumerateArray())
+    // {
+    //   //Data.Add($"HealthCheck:Probes:{i}:Name", jsonNode["metadata"]["name"].ToString());
+    //
+    //   foreach (var properties in jsonNode["spec"].AsObject())
+    //   {
+    //     try
+    //     {
+    //       Data.Add($"HealthCheck:Probes:{i}:{properties.Key}", properties.Value.ToString());
+    //     }
+    //     catch (Exception e)
+    //     {
+    //       Console.WriteLine(e);
+    //       throw;
+    //     }
+    //
+    //     Data.Add($"HealthCheck:Probes:{i}:{property.Key}", property.Value.ToString());
+    //   }
+    //
+    //   i++;
+    // }
+    //
+    // Console.WriteLine(jsonObject.ToString());
+    //
+    // foreach (var test in Data)
+    // {
+    //   Console.WriteLine(test.Key + " " + test.Value);
+    // }
 
 
     // var json = new

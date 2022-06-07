@@ -4,7 +4,8 @@
     "Plugins": [
       "AspNetCoreHealthChecker.RabbitMQ",
       "AspNetCoreHealthChecker.Network",
-      "AspNetCoreHealthChecker.Uri"
+      "AspNetCoreHealthChecker.Uri",
+      "AspNetCoreHealthChecker.NpgSql"
     ],
     "Probes": [],
     "Endpoints": [

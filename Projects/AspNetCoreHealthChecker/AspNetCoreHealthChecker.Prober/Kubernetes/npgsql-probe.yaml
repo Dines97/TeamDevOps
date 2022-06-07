@@ -1,0 +1,18 @@
+apiVersion: denis.com/v1alpha1
+kind: Probe
+metadata:
+  name: postgres
+  namespace: default
+spec:
+  Type: NpgSql
+  Timeout: 1
+  Severity: critical
+  Description: 'Some description'
+  # Host: postgres-postgresql
+  Host: localhost
+  Port: 5432
+  Username: postgres
+  Password: 123456
+  Database: postgres
+
+  

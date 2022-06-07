@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   Type: RabbitMQ
-  ConnectionString: 'amqp://localhost:19420'
+  ConnectionString: 'amqp://localhost:5672'
   Timeout: 1
   Severity: critical
   Description: 'Some description'

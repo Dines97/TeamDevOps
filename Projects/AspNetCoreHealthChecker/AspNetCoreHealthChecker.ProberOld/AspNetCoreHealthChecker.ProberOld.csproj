@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="KubernetesClient" Version="7.2.10"/>
-    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj"/>
-    <ProjectReference Include="..\AspNetCoreHealthChecker.RabbitMQ\AspNetCoreHealthChecker.RabbitMQ.csproj"/>
+    <PackageReference Include="KubernetesClient" Version="7.2.19" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker.RabbitMQ\AspNetCoreHealthChecker.RabbitMQ.csproj" />
   </ItemGroup>
   
 </Project>

@@ -8,16 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1"/>
-    <PackageReference Include="KubernetesClient" Version="7.2.19"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="KubernetesClient" Version="7.2.19" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetCoreHealthChecker.RabbitMQ\AspNetCoreHealthChecker.RabbitMQ.csproj"/>
-    <ProjectReference Include="..\AspNetCoreHealthChecker.Network\AspNetCoreHealthChecker.Network.csproj"/>
-    <ProjectReference Include="..\AspNetCoreHealthChecker.Uri\AspNetCoreHealthChecker.Uri.csproj"/>
-    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj"/>
+    <ProjectReference Include="..\AspNetCoreHealthChecker.RabbitMQ\AspNetCoreHealthChecker.RabbitMQ.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker.NpgSql\AspNetCoreHealthChecker.NpgSql.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker.Network\AspNetCoreHealthChecker.Network.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker.Uri\AspNetCoreHealthChecker.Uri.csproj" />
+    <ProjectReference Include="..\AspNetCoreHealthChecker\AspNetCoreHealthChecker.csproj" />
   </ItemGroup>
 
 </Project>

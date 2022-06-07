@@ -32,6 +32,15 @@ spec:
                   type: array
                   items:
                     type: string
+                Port:
+                  type: integer
+                Username:
+                  type: string
+                Password:
+                  x-kubernetes-int-or-string: true
+                Database:
+                  type: string
+
   names:
     kind: Probe
     singular: probe
